@@ -175,6 +175,7 @@ properties:
       - qcom,kryo570
       - qcom,kryo685
       - qcom,scorpion
+      - samsung,mongoose-m4
 
   enable-method:
     $ref: '/schemas/types.yaml#/definitions/string'
