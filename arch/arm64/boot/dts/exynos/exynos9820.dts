@@ -16,6 +16,8 @@
 /dts-v1/;
 #include <dt-bindings/interrupt-controller/arm-gic.h>
 
+#include "exynos9820-pinctrl.dtsi"
+
 / {
 	compatible = "samsung,armv8", "samsung,exynos9820";
 	dtb-hw_rev = <0>;
