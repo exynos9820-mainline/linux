@@ -195,6 +195,11 @@
 		};
 	};
 
+	chipid@10000000 {
+		compatible = "samsung,exynos850-chipid";
+		reg = <0x0 0x10000000 0x100>;
+	};
+
 	timer {
 	        compatible = "arm,armv8-timer";
 		interrupts = <GIC_PPI 13
