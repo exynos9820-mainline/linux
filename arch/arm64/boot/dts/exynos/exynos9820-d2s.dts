@@ -1,0 +1,80 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * Copyright (c) 2023, Leandro Friedrich <email@leandrofriedrich.de>
+ */
+
+/dts-v1/;
+#include "exynos7885.dtsi"
+
+/ {
+	model = "Samsung Galaxy Note10+";
+	compatible = "samsung,d2s", "samsung,exynos9820";
+	
+	#address-cells = <2>;
+	#size-cells = <2>;
+	
+	chosen {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		stdout-path = "/chosen/framebuffer@0xca000000";
+		framebuffer@0xca000000 {
+			compatible = "simple-framebuffer";
+			reg = <0x0 0xca000000 0x0 (1440*3030*4)>;
+			width = <1440>;
+			height = <3440>;
+			stride = <1440 * 4)>;
+			format = "a8r8g8b8";
+		};
+	};
+	
+	memory@80000000 {
+                device_type = "memory";
+                reg = <0x00 0x80000000 0x3ab00000>;
+        };
+
+        memory@C0000000 {
+                device_type = "memory";
+                reg = <0x00 0xc0000000 0x20000000>;
+        };
+
+        memory@E1900000 {
+                device_type = "memory";
+                reg = <0x00 0xe1900000 0x1e700000>;
+        };
+
+        memory@880000000 {
+                device_type = "memory";
+                reg = <0x08 0x80000000 0x80000000>;
+        };
+
+        memory@900000000 {
+                device_type = "memory";
+                reg = <0x09 0x00 0x80000000>;
+        };
+
+        memory@980000000 {
+                device_type = "memory";
+                reg = <0x09 0x80000000 0x80000000>;
+        };
+
+        memory@A00000000 {
+                device_type = "memory";
+                reg = <0x0a 0x00 0x80000000>;
+        };
+
+        memory@A80000000 {
+                device_type = "memory";
+                reg = <0x0a 0x80000000 0x80000000>;
+        };
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		framebuffer@0xec000000 {
+			reg = <0x0 0xec000000 0x0 (720*1520*4)>;
+			no-map;
+		};
+	};
+};
