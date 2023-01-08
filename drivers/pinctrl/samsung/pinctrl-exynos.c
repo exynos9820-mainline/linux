@@ -732,7 +732,7 @@ static void exynos_pinctrl_resume_bank(
 			+ bank->eint_offset), save->eint_con);
 	pr_debug("%s: fltcon0 %#010x => %#010x\n", bank->name,
 			readl(regs + EXYNOS_GPIO_EFLTCON_OFFSET
-			+ 2 * bank->fltcon_offset_offset), save->eint_fltcon0);
+			+ 2 * bank->fltcon_offset), save->eint_fltcon0);
 	pr_debug("%s: fltcon1 %#010x => %#010x\n", bank->name,
 			readl(regs + EXYNOS_GPIO_EFLTCON_OFFSET
 			+ 2 * bank->fltcon_offset + 4), save->eint_fltcon1);
