@@ -82,8 +82,8 @@ static void __init init_screen_info(void)
 			memblock_mark_nomap(screen_info.lfb_base,
 					    screen_info.lfb_size);
 
-		if (IS_ENABLED(CONFIG_EFI_EARLYCON))
-			efi_earlycon_reprobe();
+		//if (IS_ENABLED(CONFIG_EFI_EARLYCON))
+		//	efi_earlycon_reprobe();
 	}
 }
 

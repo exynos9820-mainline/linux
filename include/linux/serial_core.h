@@ -867,6 +867,7 @@ struct earlycon_device {
 	struct uart_port port;
 	char options[32];		/* e.g., 115200n8 */
 	unsigned int baud;
+	int offset;
 };
 
 struct earlycon_id {
@@ -895,7 +896,7 @@ extern const struct earlycon_id __earlycon_table_end[];
 
 #define EARLYCON_DECLARE(_name, fn)	OF_EARLYCON_DECLARE(_name, "", fn)
 
-int of_setup_earlycon(const struct earlycon_id *match, unsigned long node,
+int of_setup_earlycon(const struct earlycon_id *match, int node,
 		      const char *options);
 
 #ifdef CONFIG_SERIAL_EARLYCON

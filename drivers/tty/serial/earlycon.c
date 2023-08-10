@@ -251,7 +251,7 @@ early_param("earlycon", param_setup_earlycon);
 #ifdef CONFIG_OF_EARLY_FLATTREE
 
 int __init of_setup_earlycon(const struct earlycon_id *match,
-			     unsigned long node,
+			     int offset,
 			     const char *options)
 {
 	int err;
@@ -265,25 +265,25 @@ int __init of_setup_earlycon(const struct earlycon_id *match,
 
 	spin_lock_init(&port->lock);
 	port->iotype = UPIO_MEM;
-	addr = of_flat_dt_translate_address(node);
+	addr = of_flat_dt_translate_address(offset);
 	if (addr == OF_BAD_ADDR) {
 		pr_warn("[%s] bad address\n", match->name);
 		return -ENXIO;
 	}
 	port->mapbase = addr;
 
-	val = of_get_flat_dt_prop(node, "reg-offset", NULL);
+	val = of_get_flat_dt_prop(offset, "reg-offset", NULL);
 	if (val)
 		port->mapbase += be32_to_cpu(*val);
 	port->membase = earlycon_map(port->mapbase, SZ_4K);
 
-	val = of_get_flat_dt_prop(node, "reg-shift", NULL);
+	val = of_get_flat_dt_prop(offset, "reg-shift", NULL);
 	if (val)
 		port->regshift = be32_to_cpu(*val);
-	big_endian = of_get_flat_dt_prop(node, "big-endian", NULL) != NULL ||
+	big_endian = of_get_flat_dt_prop(offset, "big-endian", NULL) != NULL ||
 		(IS_ENABLED(CONFIG_CPU_BIG_ENDIAN) &&
-		 of_get_flat_dt_prop(node, "native-endian", NULL) != NULL);
-	val = of_get_flat_dt_prop(node, "reg-io-width", NULL);
+		 of_get_flat_dt_prop(offset, "native-endian", NULL) != NULL);
+	val = of_get_flat_dt_prop(offset, "reg-io-width", NULL);
 	if (val) {
 		switch (be32_to_cpu(*val)) {
 		case 1:
@@ -301,11 +301,11 @@ int __init of_setup_earlycon(const struct earlycon_id *match,
 		}
 	}
 
-	val = of_get_flat_dt_prop(node, "current-speed", NULL);
+	val = of_get_flat_dt_prop(offset, "current-speed", NULL);
 	if (val)
 		early_console_dev.baud = be32_to_cpu(*val);
 
-	val = of_get_flat_dt_prop(node, "clock-frequency", NULL);
+	val = of_get_flat_dt_prop(offset, "clock-frequency", NULL);
 	if (val)
 		port->uartclk = be32_to_cpu(*val);
 
@@ -314,6 +314,9 @@ int __init of_setup_earlycon(const struct earlycon_id *match,
 		strscpy(early_console_dev.options, options,
 			sizeof(early_console_dev.options));
 	}
+
+	early_console_dev.offset = offset;
+
 	earlycon_init(&early_console_dev, match->name);
 	err = match->setup(&early_console_dev, options);
 	earlycon_print_info(&early_console_dev);

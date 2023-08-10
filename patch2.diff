@@ -1,0 +1,35 @@
+---
+ drivers/tty/serial/earlycon.c | 3 +++
+ include/linux/serial_core.h   | 1 +
+ 2 files changed, 4 insertions(+)
+
+diff --git a/drivers/tty/serial/earlycon.c b/drivers/tty/serial/earlycon.c
+index bc210ae8173d97d5ef422468acf2755a853cb943..be2f01520f6608f6ece725dd83d2526e30477b47 100644
+--- a/drivers/tty/serial/earlycon.c
++++ b/drivers/tty/serial/earlycon.c
+@@ -304,6 +304,9 @@ int __init of_setup_earlycon(const struct earlycon_id *match,
+ 		strlcpy(early_console_dev.options, options,
+ 			sizeof(early_console_dev.options));
+ 	}
++
++	early_console_dev.offset = offset;
++
+ 	earlycon_init(&early_console_dev, match->name);
+ 	err = match->setup(&early_console_dev, options);
+ 	earlycon_print_info(&early_console_dev);
+diff --git a/include/linux/serial_core.h b/include/linux/serial_core.h
+index cbd5070bc87f42aa450c4ca7af8a9b59fbe88574..e65b9aba4e5fdaedb560d2cbbf326a11cfecbcac 100644
+--- a/include/linux/serial_core.h
++++ b/include/linux/serial_core.h
+@@ -349,6 +349,7 @@ struct earlycon_device {
+ 	struct uart_port port;
+ 	char options[16];		/* e.g., 115200n8 */
+ 	unsigned int baud;
++	int offset;
+ };
+ 
+ struct earlycon_id {
+-- 
+2.37.0
+
+  
