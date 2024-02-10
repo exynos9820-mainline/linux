@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Copyright (c) 2024, J0SH1X <aljoshua.hell0@gmail.com>
+ */
+
+/dts-v1/;
+
+#include "exynos9820.dtsi"
+
+/ {
+	model = "Samsung Galaxy Note 10";
+	compatible = "samsung,d2s", "samsung,exynos9820";
+
+    aliases {
+	};
+
+    memory@80000000 {
+		device_type = "memory";
+		reg = <0 0x90000000 0 0x60000000>;
+	};
+
+	chosen {
+		bootargs = "earlycon=simplefb,0xCA000000,1440x3040x32 console=simplefb";
+
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+    };
+
+};
